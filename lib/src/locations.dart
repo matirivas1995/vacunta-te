@@ -44,12 +44,12 @@ class Office {
   Office({
     required this.address,
     required this.id,
-    required this.image,
+    //required this.image,
     required this.lat,
     required this.lng,
     required this.name,
     required this.phone,
-    required this.region,
+    //required this.region,
   });
 
   factory Office.fromJson(Map<String, dynamic> json) => _$OfficeFromJson(json);
@@ -57,12 +57,12 @@ class Office {
 
   final String address;
   final String id;
-  final String image;
+  // final String image;
   final double lat;
   final double lng;
   final String name;
   final String phone;
-  final String region;
+  //final String region;
 }
 
 @JsonSerializable()
@@ -80,11 +80,28 @@ class Locations {
   //final List<Region> regions;
 }
 
+/*
 Future<Locations> getCentrosVacunatorios() async {
   String data = await rootBundle.loadString("assets/data.json");
   return Locations.fromJson(json.decode(data));
 }
+*/
+Future<Locations> getCentrosVacunatorios() async {
+  const googleLocationsURL = 'https://api.matirivas.me/hospitales';
+  //const googleLocationsURL = 'http://localhost:3000/hospitales';
+  //const googleLocationsURL = 'https://about.google/static/data/locations.json';
 
+  // Retrieve the locations of Google offices
+  final response = await http.get(Uri.parse(googleLocationsURL));
+  if (response.statusCode == 200) {
+    return Locations.fromJson(json.decode(response.body));
+  } else {
+    throw HttpException(
+        'Unexpected status code ${response.statusCode}:'
+        ' ${response.reasonPhrase}',
+        uri: Uri.parse(googleLocationsURL));
+  }
+}
 
 /*
 Future<Locations> getGoogleOffices() async {

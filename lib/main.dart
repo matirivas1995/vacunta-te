@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'src/locations.dart' as locations;
+import 'package:location/location.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +14,18 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final Map<String, Marker> _markers = {};
+  LatLng _initialcameraposition = LatLng(-25.283097, -57.635235);
+  final Location location = Location();
+
   Future<void> _onMapCreated(GoogleMapController controller) async {
+    location.onLocationChanged.listen((l) {
+      controller.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(target: LatLng(l.latitude!, l.longitude!), zoom: 15),
+        ),
+      );
+    });
+
     final googleOffices = await locations.getCentrosVacunatorios();
     setState(() {
       _markers.clear();
@@ -34,18 +46,18 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Centros vacunatorios'),
-          backgroundColor: Colors.green[700],
+          title: const Text('Centros de Vacunacion', style: TextStyle(color: Colors.white, fontSize: 28),),
+          backgroundColor: Color(0xff009AAD),
         ),
         body: GoogleMap(
           onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(
-            target: const LatLng(0, 0),
-            zoom: 2,
-          ),
+          initialCameraPosition: CameraPosition(target: _initialcameraposition, zoom: 13),
           markers: _markers.values.toSet(),
+          myLocationEnabled: true,
+          myLocationButtonEnabled: true,
         ),
       ),
     );
