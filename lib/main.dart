@@ -94,20 +94,21 @@ class _MyAppState extends State<MyApp> {
 
     return FutureBuilder(
     builder: (context, offices) {
+      print('project snapshot data is: ${offices}');
+      print('project snapshot data is: ${offices.data}');
       if (offices.connectionState == ConnectionState.none &&
           offices.hasData == null) {
-        //print('project snapshot data is: ${offices.data}');
+        print('project snapshot data is: ${offices.data}');
         return Container();
       }
+
       return ListView.builder(
-        itemCount: offices.data.centros.length,
-        itemBuilder: (context, index) {
-          Office project = offices.data.centros[index];
-          return Column(
-            children: <Widget>[
-              // Widget to display the list of project
-            ],
-          );
+        itemCount: 50,
+        itemBuilder: (BuildContext context, int i) {
+        return Container(
+          padding: const EdgeInsets.all(12.0),
+          child: Text("$i"),
+        );
         },
       );
     },
