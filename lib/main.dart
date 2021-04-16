@@ -19,11 +19,19 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Completer<GoogleMapController> _controller = Completer();
   final PanelController _pc = new PanelController();
+  late BitmapDescriptor customIcon;
   final Map<String, Marker> _markers = {};
   LatLng _initialcameraposition = LatLng(-25.283097, -57.635235);
   final Location location = Location();
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
+
+    BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(12, 12)),
+        'assets/img/vaccine_icon.png')
+          .then((d) {
+        customIcon = d;
+      });
+
     location.onLocationChanged.listen((l) {
       controller.animateCamera(
         CameraUpdate.newCameraPosition(
@@ -39,6 +47,7 @@ class _MyAppState extends State<MyApp> {
         final marker = Marker(
           markerId: MarkerId(centro.name),
           position: LatLng(centro.lat, centro.lng),
+          icon: customIcon,
           infoWindow: InfoWindow(
             title: centro.name,
             snippet: centro.address,
