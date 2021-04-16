@@ -80,12 +80,12 @@ class Locations {
   //final List<Region> regions;
 }
 
-/*
+
 Future<Locations> getCentrosVacunatorios() async {
   String data = await rootBundle.loadString("assets/data.json");
   return Locations.fromJson(json.decode(data));
 }
-*/
+/*
 Future<Locations> getCentrosVacunatorios() async {
   const googleLocationsURL = 'https://api.matirivas.me/hospitales';
   //const googleLocationsURL = 'http://localhost:3000/hospitales';
@@ -101,7 +101,7 @@ Future<Locations> getCentrosVacunatorios() async {
         ' ${response.reasonPhrase}',
         uri: Uri.parse(googleLocationsURL));
   }
-}
+}*/
 
 /*
 Future<Locations> getGoogleOffices() async {
