@@ -49,7 +49,7 @@ class Office {
     required this.lng,
     required this.name,
     required this.phone,
-    //required this.region,
+    required this.distance,
   });
 
   factory Office.fromJson(Map<String, dynamic> json) => _$OfficeFromJson(json);
@@ -62,7 +62,7 @@ class Office {
   final double lng;
   final String name;
   final String phone;
-  //final String region;
+  final String distance;
 }
 
 @JsonSerializable()
@@ -85,8 +85,8 @@ Future<Locations> getCentrosVacunatorios() async {
   String data = await rootBundle.loadString("assets/data.json");
   return Locations.fromJson(json.decode(data));
 }
-/*
-Future<Locations> getCentrosVacunatorios() async {
+
+/*Future<Locations> getCentrosVacunatorios() async {
   const googleLocationsURL = 'https://api.matirivas.me/hospitales';
   //const googleLocationsURL = 'http://localhost:3000/hospitales';
   //const googleLocationsURL = 'https://about.google/static/data/locations.json';
@@ -102,6 +102,11 @@ Future<Locations> getCentrosVacunatorios() async {
         uri: Uri.parse(googleLocationsURL));
   }
 }*/
+
+Future<Locations> getCentrosVacunatoriosByDistance(double lat, double lng) async {
+  String data = await rootBundle.loadString("assets/databydistance.json");
+  return Locations.fromJson(json.decode(data));
+}
 
 /*
 Future<Locations> getGoogleOffices() async {

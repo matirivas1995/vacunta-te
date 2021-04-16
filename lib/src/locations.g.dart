@@ -43,7 +43,7 @@ Office _$OfficeFromJson(Map<String, dynamic> json) {
     lng: (json['lng'] as num).toDouble(),
     name: json['name'] as String,
     phone: json['phone'] as String,
-    //region: json['region'] as String,
+    distance: json['distance'] as String,
   );
 }
 
