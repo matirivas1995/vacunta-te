@@ -92,10 +92,11 @@ class _MyAppState extends State<MyApp> {
     
 //final centro in googleOffices.centros
 
-    return FutureBuilder(
+    return FutureBuilder<locations.Locations>(
     builder: (context, offices) {
       print('project snapshot data is: ${offices}');
       print('project snapshot data is: ${offices.data}');
+      print('project snapshot data is: ${offices.data!.centros}');
       if (offices.connectionState == ConnectionState.none &&
           offices.hasData == null) {
         print('project snapshot data is: ${offices.data}');
@@ -103,11 +104,20 @@ class _MyAppState extends State<MyApp> {
       }
 
       return ListView.builder(
-        itemCount: 50,
+        itemCount: offices.data!.centros.length,
         itemBuilder: (BuildContext context, int i) {
-        return Container(
+        return Padding(
           padding: const EdgeInsets.all(12.0),
-          child: Text("$i"),
+          child: Container(
+            height: 50,
+            color: Colors.blueGrey,
+            child: Center(
+              child: Text(
+                offices.data!.centros[i].name,
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
         );
         },
       );
