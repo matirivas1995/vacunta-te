@@ -104,8 +104,18 @@ Future<Locations> getCentrosVacunatorios() async {
 }
 
 Future<Locations> getCentrosVacunatoriosByDistance(double lat, double lng) async {
-  String data = await rootBundle.loadString("assets/databydistance.json");
-  return Locations.fromJson(json.decode(data));
+  const googleLocationsURL = 'https://api.matirivas.me/hospitales';
+
+  // Retrieve the locations of Google offices
+  final response = await http.get(Uri.parse(googleLocationsURL));
+  if (response.statusCode == 200) {
+    return Locations.fromJson(json.decode(response.body));
+  } else {
+    throw HttpException(
+        'Unexpected status code ${response.statusCode}:'
+        ' ${response.reasonPhrase}',
+        uri: Uri.parse(googleLocationsURL));
+  }
 }
 
 /*

@@ -149,7 +149,8 @@ class _MyAppState extends State<MyApp> {
       child: Card(
         child: Row(
           children: <Widget>[
-            Container(margin: EdgeInsets.all(10), child: Text(centro.distance)),
+            //Container(margin: EdgeInsets.all(10), child: Text(centro.distance)),
+            Container(margin: EdgeInsets.all(10), child: Text("0KM")),
             Container(
               height: 20,
               width: 1,
